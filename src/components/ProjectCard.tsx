@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import type { Project } from "../types/Project";
 
 function normalizeUrl(u?: string) {
