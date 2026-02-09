@@ -32,7 +32,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 
       <div className="card-body">
         <h3 className="card-title">{project.title}</h3>
-        <p className="card-creator">By {project.user?.name || "Unknown"}</p>
+        <p className="card-creator">By {project.creatorName || project.user?.name || "Unknown"}</p>
 
         <div className="card-links">
           {project.website && (

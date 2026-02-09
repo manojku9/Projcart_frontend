@@ -19,7 +19,6 @@ export default function Dashboard() {
   const [githubInput, setGithubInput] = useState("");
   const [xProfileInput, setXProfileInput] = useState("");
   const [creatorNameInput, setCreatorNameInput] = useState("");
-  const [creatorNameOriginal, setCreatorNameOriginal] = useState("");
   const [savingEdit, setSavingEdit] = useState(false);
   const navigate = useNavigate();
 
@@ -29,11 +28,11 @@ export default function Dashboard() {
         window.dispatchEvent(new Event("app:loading"));
         const res = await API.get("/users/me");
         const fetchedUser = res.data.user || null;
-        const projectsWithUser = (res.data.projects || []).map((p: Project) => ({
+        const projectsWithCreator = (res.data.projects || []).map((p: Project) => ({
           ...p,
-          user: fetchedUser ? { name: fetchedUser.name } : p.user,
+          creatorName: p.creatorName || fetchedUser?.name || ""
         }));
-        setProjects(projectsWithUser);
+        setProjects(projectsWithCreator);
         setError("");
       } catch (err) {
         const axiosErr = err as AxiosError<string>;
@@ -78,9 +77,8 @@ export default function Dashboard() {
     setWebsiteInput(project.website || "");
     setGithubInput(project.github || "");
     setXProfileInput(project.xProfile || "");
-    const creatorName = project.user?.name || "";
+    const creatorName = project.creatorName || project.user?.name || "";
     setCreatorNameInput(creatorName);
-    setCreatorNameOriginal(creatorName);
     setIsEditOpen(true);
   };
 
@@ -102,23 +100,12 @@ export default function Dashboard() {
 
     setSavingEdit(true);
     try {
-      const trimmedCreatorName = creatorNameInput.trim();
-      if (trimmedCreatorName !== creatorNameOriginal) {
-        const userRes = await API.patch("/users/me", { name: trimmedCreatorName });
-        const updatedName = userRes.data?.user?.name || trimmedCreatorName;
-        setCreatorNameOriginal(updatedName);
-        setProjects((prev) =>
-          prev.map((p) => ({
-            ...p,
-            user: { ...(p.user || {}), name: updatedName }
-          }))
-        );
-      }
       const res = await API.put(`/projects/${editingProjectId}`, {
         title: titleInput.trim(),
         website: websiteInput.trim(),
         github: githubInput.trim(),
         xProfile: xProfileInput.trim(),
+        creatorName: creatorNameInput.trim()
       });
       setProjects((prev) =>
         prev.map((p) =>
@@ -126,7 +113,7 @@ export default function Dashboard() {
             ? {
                 ...p,
                 ...res.data,
-                user: { ...(p.user || {}), name: creatorNameInput.trim() }
+                creatorName: creatorNameInput.trim()
               }
             : p
         )

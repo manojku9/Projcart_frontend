@@ -4,6 +4,7 @@ export interface Project {
   website: string;
   github: string;
   xProfile: string;
+  creatorName?: string;
   views?: number;
   createdAt?: string;
   previewTitle?: string;
