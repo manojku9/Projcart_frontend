@@ -1,73 +1,91 @@
-# React + TypeScript + Vite
+# Project Showcase Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A polished, fast React app for showcasing projects, managing a personal dashboard, and sharing work with the community. Built with Vite + TypeScript and designed to pair with the backend API in this repo.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Highlights
 
-## React Compiler
+- Auth flows for email/password plus Google and GitHub OAuth.
+- Personal dashboard to create, edit, and delete projects.
+- Project cards with screenshots and link previews.
+- Sorting and browsing the full public project list.
+- Responsive layout optimized for mobile and desktop.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19 + TypeScript
+- Vite for dev server and production builds
+- Axios for API calls
+- React Router for client-side routing
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Quick Start
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# from frontend/project-showcase-frontend
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open http://localhost:5173
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Environment Variables
+
+Create a `.env` file at the project root (same level as `package.json`):
+
+```bash
+VITE_BACKEND_URL=http://localhost:5000
+# Optional override for the API prefix
+VITE_API_URL=http://localhost:5000/api
 ```
+
+Notes:
+- `VITE_BACKEND_URL` is used for OAuth redirect links.
+- `VITE_API_URL` is optional. If omitted, the app uses `VITE_BACKEND_URL/api`.
+
+---
+
+## Scripts
+
+```bash
+npm run dev      # Start dev server
+npm run build    # Typecheck + production build
+npm run preview  # Preview production build
+npm run lint     # Lint the codebase
+```
+
+---
+
+## App Structure
+
+```
+src/
+  components/    # Reusable UI blocks (Navbar, ProjectCard, etc.)
+  pages/         # Route-level screens (Home, Dashboard, Login, etc.)
+  services/      # API client and helpers
+  types/         # Shared TypeScript types
+```
+
+---
+
+## Backend Pairing
+
+This frontend expects the backend API from the `backend/` folder in the same repo. Make sure the backend is running and that your environment variables point to it.
+
+---
+
+## Deployment
+
+The app is Vercel-ready. The included `vercel.json` handles SPA rewrites.
+
+---
+
+## License
+
+MIT (update as needed)
