@@ -18,6 +18,8 @@ export default function Dashboard() {
   const [websiteInput, setWebsiteInput] = useState("");
   const [githubInput, setGithubInput] = useState("");
   const [xProfileInput, setXProfileInput] = useState("");
+  const [creatorNameInput, setCreatorNameInput] = useState("");
+  const [creatorNameOriginal, setCreatorNameOriginal] = useState("");
   const [savingEdit, setSavingEdit] = useState(false);
   const navigate = useNavigate();
 
@@ -76,6 +78,9 @@ export default function Dashboard() {
     setWebsiteInput(project.website || "");
     setGithubInput(project.github || "");
     setXProfileInput(project.xProfile || "");
+    const creatorName = project.user?.name || "";
+    setCreatorNameInput(creatorName);
+    setCreatorNameOriginal(creatorName);
     setIsEditOpen(true);
   };
 
@@ -90,17 +95,41 @@ export default function Dashboard() {
       setError("Project title is required");
       return;
     }
+    if (!creatorNameInput.trim()) {
+      setError("Created by name is required");
+      return;
+    }
 
     setSavingEdit(true);
     try {
-      const res = await API.patch(`/projects/${editingProjectId}`, {
+      const trimmedCreatorName = creatorNameInput.trim();
+      if (trimmedCreatorName !== creatorNameOriginal) {
+        const userRes = await API.patch("/users/me", { name: trimmedCreatorName });
+        const updatedName = userRes.data?.user?.name || trimmedCreatorName;
+        setCreatorNameOriginal(updatedName);
+        setProjects((prev) =>
+          prev.map((p) => ({
+            ...p,
+            user: { ...(p.user || {}), name: updatedName }
+          }))
+        );
+      }
+      const res = await API.put(`/projects/${editingProjectId}`, {
         title: titleInput.trim(),
         website: websiteInput.trim(),
         github: githubInput.trim(),
         xProfile: xProfileInput.trim(),
       });
       setProjects((prev) =>
-        prev.map((p) => (p._id === editingProjectId ? { ...p, ...res.data } : p))
+        prev.map((p) =>
+          p._id === editingProjectId
+            ? {
+                ...p,
+                ...res.data,
+                user: { ...(p.user || {}), name: creatorNameInput.trim() }
+              }
+            : p
+        )
       );
       setError("");
       closeEditModal();
@@ -264,6 +293,15 @@ export default function Dashboard() {
                 placeholder="My Awesome Project"
                 value={titleInput}
                 onChange={(e) => setTitleInput(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Created By *</label>
+              <input
+                placeholder="Your name"
+                value={creatorNameInput}
+                onChange={(e) => setCreatorNameInput(e.target.value)}
               />
             </div>
 
