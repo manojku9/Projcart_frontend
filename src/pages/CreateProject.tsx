@@ -13,6 +13,10 @@ export default function CreateProject() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const handleClose = () => {
+    navigate("/dashboard");
+  };
+
   const handleSubmit = async () => {
     if (!title.trim()) {
       setError("Project title is required");
@@ -43,13 +47,13 @@ export default function CreateProject() {
   };
 
   return (
-    <main className="container auth-page">
+    <main className="container auth-page" onClick={handleClose}>
       <div className="create-project-header">
         <h2>Create Project</h2>
         <button
           type="button"
           className="close-btn"
-          onClick={() => navigate("/dashboard")}
+          onClick={handleClose}
           aria-label="Close"
           title="Close"
         >

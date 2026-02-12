@@ -39,7 +39,7 @@ export default function Home() {
           </p>
           {!isLoggedIn && (
             <div className="hero-actions">
-              <Link to="/login" className="btn-primary hero-cta">Get Started</Link>
+              <Link to="/projects" className="btn-primary hero-cta">Get Started</Link>
               <Link to="/login" className="btn-secondary hero-secondary">Submit a Project</Link>
             </div>
           )}

@@ -1,66 +1,11 @@
-import { useState } from "react";
-import API from "../services/api";
-import { useNavigate } from "react-router-dom";
-import type { AxiosError } from "axios";
+import { Link } from "react-router-dom";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
   const authBaseUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
-
-  const handleLogin = async () => {
-    if (!email || !password) {
-      setError("Email and password are required");
-      return;
-    }
-
-    try {
-      window.dispatchEvent(new Event("app:loading"));
-      const res = await API.post("/auth/login", { email, password });
-      localStorage.setItem("token", res.data.token);
-      setError("");
-      navigate("/dashboard");
-    } catch (err) {
-      const axiosErr = err as AxiosError<string>;
-      setError(axiosErr.response?.data || "Login failed");
-    } finally {
-      window.dispatchEvent(new Event("app:loaded"));
-    }
-  };
 
   return (
     <main className="container auth-page">
       <h2>Login</h2>
-
-      {error && <p className="error-message">{error}</p>}
-
-      <div className="form-group">
-        <input
-          placeholder="Email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-
-      <div className="form-group">
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-
-      <button className="btn-primary" onClick={handleLogin}>
-        Login
-      </button>
-
-      <div style={{ margin: "1.5rem 0", textAlign: "center", color: "var(--text-secondary)" }}>
-        or
-      </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
         <a href={`${authBaseUrl}/api/auth/google`} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", padding: "0.75rem", background: "#fff", color: "#1F2937", border: "1px solid var(--border)", borderRadius: "0.5rem", fontWeight: 600, textDecoration: "none", transition: "var(--transition)" }} onMouseEnter={(e) => e.currentTarget.style.background = "#f5f5f5"} onMouseLeave={(e) => e.currentTarget.style.background = "#fff"}>
@@ -75,7 +20,7 @@ export default function Login() {
 
       <p style={{ marginTop: "1.5rem" }}>
         Don't have an account?{" "}
-        <a href="/signup">Sign up here</a>
+        <Link to="/signup">Sign up here</Link>
       </p>
     </main>
   );
