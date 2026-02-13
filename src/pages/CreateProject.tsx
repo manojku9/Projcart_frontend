@@ -47,7 +47,7 @@ export default function CreateProject() {
   };
 
   return (
-    <main className="container auth-page" onClick={handleClose}>
+    <main className="container auth-page">
       <div className="create-project-header">
         <h2>Create Project</h2>
         <button
@@ -64,8 +64,12 @@ export default function CreateProject() {
       {error && <p className="error-message">{error}</p>}
 
       <div className="form-group">
-        <label>Project Title *</label>
+        <label htmlFor="project-title">Project Title *</label>
         <input
+          id="project-title"
+          name="title"
+          type="text"
+          autoComplete="off"
           placeholder="My Awesome Project"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -73,8 +77,12 @@ export default function CreateProject() {
       </div>
 
       <div className="form-group">
-        <label>Website URL</label>
+        <label htmlFor="project-website">Website URL</label>
         <input
+          id="project-website"
+          name="website"
+          type="url"
+          autoComplete="off"
           placeholder="https://example.com"
           value={website}
           onChange={(e) => setWebsite(e.target.value)}
@@ -82,8 +90,12 @@ export default function CreateProject() {
       </div>
 
       <div className="form-group">
-        <label>GitHub URL</label>
+        <label htmlFor="project-github">GitHub URL</label>
         <input
+          id="project-github"
+          name="github"
+          type="url"
+          autoComplete="off"
           placeholder="https://github.com/username/repo"
           value={github}
           onChange={(e) => setGithub(e.target.value)}
@@ -91,8 +103,12 @@ export default function CreateProject() {
       </div>
 
       <div className="form-group">
-        <label>X (Twitter) Profile</label>
+        <label htmlFor="project-x-profile">X (Twitter) Profile</label>
         <input
+          id="project-x-profile"
+          name="xProfile"
+          type="url"
+          autoComplete="off"
           placeholder="https://x.com/username"
           value={xProfile}
           onChange={(e) => setXProfile(e.target.value)}
