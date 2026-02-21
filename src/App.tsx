@@ -68,7 +68,7 @@ function App() {
         <div className="container footer-inner">
           <div className="footer-credit">
             <span>Built by </span>
-            <a href="https://x.com/manojdotdev" target="_blank" rel="noreferrer">Manoj</a>
+            <a rel="noreferrer">Manoj</a>
           </div>
           <a className="footer-icon" rel="noreferrer" aria-label="Manoj on X">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden>
