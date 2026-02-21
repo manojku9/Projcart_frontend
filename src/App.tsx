@@ -70,7 +70,7 @@ function App() {
             <span>Built by </span>
             <a href="https://x.com/manojdotdev" target="_blank" rel="noreferrer">Manoj</a>
           </div>
-          <a className="footer-icon" href="https://x.com/manojdotdev" target="_blank" rel="noreferrer" aria-label="Manoj on X">
+          <a className="footer-icon" rel="noreferrer" aria-label="Manoj on X">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden>
               <path d="M18.244 2H21l-6.75 7.72L22 22h-6.326l-4.95-6.1L5.346 22H2.5l7.266-8.31L2 2h6.49l4.49 5.63L18.244 2zm-1.106 18h1.78L7.01 4h-1.9l11.028 16z" />
             </svg>
