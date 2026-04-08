@@ -51,11 +51,11 @@ export default function Home() {
           </div>
           <div className="metric-card">
             <p className="metric-label">New this week</p>
-            <p className="metric-value">0</p>
+            <p className="metric-value">9</p>
           </div>
           <div className="metric-card">
             <p className="metric-label">Creators</p>
-            <p className="metric-value">0</p>
+            <p className="metric-value">5</p>
           </div>
         </div>
       </section>
